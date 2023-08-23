@@ -9,7 +9,9 @@ function Index(props) {
         return (
           <div key={i}>
             <ul>
-              <ll>{pokemon.name}</ll>
+              <li>
+                <a href={`/pokemon/${pokemon.name}`}>{pokemon.name}</a>
+              </li>
             </ul>
           </div>
         );
