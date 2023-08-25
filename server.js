@@ -31,22 +31,25 @@ mongoose.connection.once("open", () => {
   console.log("connected to mongo");
 });
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Pokemon App!");
+});
+
 app.get("/pokemon", async (req, res) => {
   let allPokemon = await Poke.find({});
   await res.render("Index", {
     pokemon: allPokemon,
   });
 });
-// ------------------{index => all Fruits}
 
 app.post("/pokemon", async (req, res) => {
-  // if (req.body.readyToEat === "on") {
-  //   //if checked, req.body.readyToEat is set to 'on'
-  //   req.body.readyToEat = true;
-  // } else {
-  //   //if not checked, req.body.readyToEat is undefined
-  //   req.body.readyToEat = false;
-  // }
+  if (req.body.readyToTrain === "on") {
+    //if checked, req.body.readyToEat is set to 'on'
+    req.body.readyToTrain = true;
+  } else {
+    //if not checked, req.body.readyToEat is undefined
+    req.body.readyToTrain = false;
+  }
   const newPokemon = await Poke.create(req.body);
   // await res.send(newPokemon);
   console.log(pokemon);
@@ -64,15 +67,15 @@ app.get("/pokemon/new", (req, res) => {
 
 app.delete("/pokemon/:id", async (req, res) => {
   await Poke.findByIdAndRemove(req.params.id);
-  res.redirect("/pokemon"); //redirect back to fruits index
+  res.redirect("/pokemon"); //redirect back to pokemon index
 });
 
 app.put("/pokemon/:id", async (req, res) => {
-  // if (req.body.readyToEat === "on") {
-  //   req.body.readyToEat = true;
-  // } else {
-  //   req.body.readyToEat = false;
-  // }
+  if (req.body.readyToTrain === "on") {
+    req.body.readyToTrain = true;
+  } else {
+    req.body.readyToTrain = false;
+  }
   const updatedPokemon = await Poke.findByIdAndUpdate(req.params.id, req.body);
   res.redirect(`/pokemon/${req.params.id}`);
 });
